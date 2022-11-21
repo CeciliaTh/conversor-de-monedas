@@ -1,6 +1,8 @@
 async function getAndCreateDataToChart() {
     const res = await fetch("https://api.gael.cloud/general/public/sismos");
     const sismos = await res.json();
+
+    
     const labels = sismos.map((sismo) => {
         return sismo.Fecha;
     });
