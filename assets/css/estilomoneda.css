@@ -5,8 +5,6 @@
 body{
 font-family: "Comic Sans MS";
 margin:2em;
-/* background-color:lightseagreen; */
-/* background-image: url('/assets/img/billetes-nacionales.jpg'); */
 background-image: url('/assets/img/fondo3-monedas.png');
 background-repeat: repeat;
 }
@@ -38,6 +36,11 @@ background-repeat: repeat;
 
 #inputMonedas{
     width:100%;
+}
+
+#grafico{
+    border-radius: 10px;
+    border: 2px solid blueviolet;
 }
 
 
