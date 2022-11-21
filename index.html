@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/img/monedas.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/estilomoneda.css">
+    <title>Cambio de Monedas</title>
+</head>
+<body>
+    <div id="contenedor">
+        <h1>Conversor de Monedas Nacional</h1>
+        <div id="div-monedas">
+            <h2>Pesos CLP:</h2>
+            <input type="number" name="monedas" id=inputMonedas value="" min=0 style="text-align:center">
+            <p style="padding-top:0.5em">Selecciona un tipo de moneda: </p>
+            <select id="selectMonedas">
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+            <div id=divBoton style="padding-top:1em">
+                <button type="button" id="conversor"> Convertir </button>
+            </div>
+            <p style="padding-top:1em">El resultado es: $<span id="resultado">resultado</span> pesos</p>
+        </div>
+        <div id="grafico">
+            <p>hola</p>
+            <canvas id="graficoMonedas"></canvas>
+        </div>
+    </div>
+  
+   
+    <p>Api para usar https://mindicador.cl/api</p>
+    <p>CDN para graficos < script src="https://cdn.jsdelivr.net/npm/chart.js" ></script> </p>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- <script src="assets/js/mindicador.json"></script> -->
+    <script src="assets/js/monedas.js"></script>
+
+    <a href="index2.html">Un grafico de prueba</a>
+</body>
+</html>
