@@ -32,41 +32,7 @@ async function getMonedas() {
         })
         inputMonedas.value = ''      
             
-      
-       
-    //    //Cargando gráfico con los elementos del arreglo
-      
-    //    function crearGraficoMonedas (datosMonedas) {
-     
-    //     // Creamos las variables necesarias para el objeto de configuración
-    //     const tipoDeGrafica = "line";
-    //     const nombresDeLasMonedas = datosMonedas.map((moneda) => moneda.Codigo);
-    //     const titulo = "Monedas";
-    //     const colorDeLinea = "green";
-    //     const valores = datosMonedas.map((moneda) => {
-    //     const valor = moneda.Valor.replace(",", ".");
-    //     return Number(valor);
-    //     });
-    //     const config = {
-    //         type: tipoDeGrafica,
-    //         data: {
-    //         labels: nombresDeLasMonedas,
-    //         datasets: [{
-    //         label: titulo,
-    //         backgroundColor: colorDeLinea,
-    //         data: valores
-    //         } ] }
-    //         };
-    //         return config;
-    //         }
-    //         async function renderGrafica() {
-    //             const monedas = await getMonedas();
-    //             const config = crearGraficoMonedas(datosMonedas);
-    //             const chartDOM = document.querySelector("#graficoMonedas");
-    //             new Chart(chartDOM, config);
-    //             }
-
-    //             renderGrafica();       
+          
     } catch (e) {
     alert(e.message);
     }
@@ -74,3 +40,44 @@ async function getMonedas() {
 
     getMonedas();
 
+    //Cargando gráfico con los elementos del arreglo
+
+    async function getMonedasParaGrafico() {  
+        const monedasGrafico = await fetch("https://mindicador.cl/api");
+        const datosMonedasGrafico = await monedasGrafico.json();
+        return datosMonedasGrafico;
+    }
+
+        function crearGraficoMonedas (monedasG) {
+     
+            // Creamos las variables necesarias para el objeto de configuración
+            const tipoDeGrafica = "line";
+            const nombresDeLasMonedas = monedasG.map((monedaG) => monedaG.codigo);
+            const titulo = "Monedas";
+            const colorDeLinea = "green";
+            const valores = monedasG.map((monedaG) => {
+            const valor = monedaG.valor.replace(",", ".");
+            return Number(valor);
+            });
+            const config = {
+                type: tipoDeGrafica,
+                data: {
+                labels: nombresDeLasMonedas,
+                datasets: [{
+                label: titulo,
+                backgroundColor: colorDeLinea,
+                data: valores
+                }]}
+                };
+                return config;
+                }
+                async function renderGrafica() {
+                    const monedasG = await getMonedasParaGrafico();
+                    const config = crearGraficoMonedas(monedasG);
+                    const chartDOM = document.querySelector('#graficoMonedas')
+                    new Chart(chartDOM, config)
+                    }
+                    renderGrafica();
+   
+       
+  
