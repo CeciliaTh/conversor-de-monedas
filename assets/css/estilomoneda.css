@@ -6,16 +6,13 @@
 body{
 font-family: "Comic Sans MS";
 margin: 2em;
-/* background-image: url("/assets/img/fondo3-monedasJPG.jpg"); */
-background-image: url("/assets/img/billetes-nacionales2.jpg"); 
-background-repeat: repeat;
+background-image: url("../img/fondo3-monedasJPG.jpg");
 }
 
 #contenedor{
     display: flex;
     flex-direction: column;
      align-items: center;
-
 }
 
 #div-monedas{
@@ -44,5 +41,3 @@ background-repeat: repeat;
     border-radius: 10px;
     border: 2px solid blueviolet;
 }
-
-
