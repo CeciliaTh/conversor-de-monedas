@@ -14,10 +14,6 @@ async function getMonedas() {
         `<option value="utm"> ${datosMonedas.utm.nombre}</option>` +
         `<option value="euro"> ${datosMonedas.euro.nombre}</option>`;
 
-            // `<option value="${datosMonedas.uf.valor}" name="${datosMonedas.uf.nombre}"> ${datosMonedas.uf.nombre}</option>` +
-            // `<option value="${datosMonedas.dolar.valor}" name="${datosMonedas.dolar.nombre}"> ${datosMonedas.dolar.nombre}</option>` +
-            // `<option value="${datosMonedas.utm.valor}" name="${datosMonedas.utm.nombre}"> ${datosMonedas.utm.nombre}</option>` +
-            // `<option value="${datosMonedas.euro.valor}"name="${datosMonedas.euro.nombre}"> ${datosMonedas.euro.nombre}</option>`;
 
         //Accion del boton para convertir
         let btnConvertir = document.querySelector('#conversor')
@@ -47,41 +43,6 @@ async function getMonedas() {
         }
     })
     inputMonedas.value = ''
-
-            
-        //     let tipoMoneda = parseInt(selectMonedas.value)
-        //     console.log(tipoMoneda)
-        //     console.log(inputMonedas)
-        //     if (inputMonedas != '') {
-        //         convertido =   inputMonedas / tipoMoneda
-        //         resultado.innerHTML = convertido.toFixed(2) 
-        //     } else {
-        //         alert('Debe ingresar un valor numérico para calcular')
-
-        //     }
-        // })
-        // inputMonedas.value = ''
-
-        // let btnConvertir = document.querySelector('#conversor')
-        // btnConvertir.addEventListener('click', function () {
-        //     let resultado = document.querySelector('#resultado')
-        //     let inputMonedas = document.querySelector('#inputMonedas').value
-        
-
-            
-        //     let tipoMoneda = parseInt(selectMonedas.value)
-        //     console.log(tipoMoneda)
-        //     console.log(inputMonedas)
-        //     if (inputMonedas != '') {
-        //         convertido =   inputMonedas / tipoMoneda
-        //         resultado.innerHTML = convertido.toFixed(2) 
-        //     } else {
-        //         alert('Debe ingresar un valor numérico para calcular')
-
-        //     }
-        // })
-        // inputMonedas.value = ''
-
 
     } catch (e) {
         alert(e.message);
