@@ -9,28 +9,78 @@ async function getMonedas() {
         // Carga de elementos en el select 
         let selectMonedas = document.querySelector('#selectMonedas')
         selectMonedas.innerHTML =
-            `<option value="${datosMonedas.uf.valor}"> ${datosMonedas.uf.nombre}</option>` +
-            `<option value="${datosMonedas.dolar.valor}"> ${datosMonedas.dolar.nombre}</option>` +
-            `<option value="${datosMonedas.utm.valor}"> ${datosMonedas.utm.nombre}</option>` +
-            `<option value="${datosMonedas.euro.valor}"> ${datosMonedas.euro.nombre}</option>`;
+        `<option value="uf"> ${datosMonedas.uf.nombre}</option>` +
+        `<option value="dolar"> ${datosMonedas.dolar.nombre}</option>` +
+        `<option value="utm"> ${datosMonedas.utm.nombre}</option>` +
+        `<option value="euro"> ${datosMonedas.euro.nombre}</option>`;
+
+            // `<option value="${datosMonedas.uf.valor}" name="${datosMonedas.uf.nombre}"> ${datosMonedas.uf.nombre}</option>` +
+            // `<option value="${datosMonedas.dolar.valor}" name="${datosMonedas.dolar.nombre}"> ${datosMonedas.dolar.nombre}</option>` +
+            // `<option value="${datosMonedas.utm.valor}" name="${datosMonedas.utm.nombre}"> ${datosMonedas.utm.nombre}</option>` +
+            // `<option value="${datosMonedas.euro.valor}"name="${datosMonedas.euro.nombre}"> ${datosMonedas.euro.nombre}</option>`;
 
         //Accion del boton para convertir
         let btnConvertir = document.querySelector('#conversor')
         btnConvertir.addEventListener('click', function () {
+            let seleccionado = selectMonedas.value
             let resultado = document.querySelector('#resultado')
-            let inputMonedas = Number(document.querySelector('#inputMonedas').value)
-            let tipoMoneda = parseInt(selectMonedas.value)
-            console.log(tipoMoneda)
-            console.log(inputMonedas)
-            if (inputMonedas != '') {
-                convertido = inputMonedas * tipoMoneda
-                resultado.innerHTML = convertido
+            let inputMonedas = document.querySelector('#inputMonedas').value
+            if (seleccionado == 'uf' && inputMonedas != ''){
+                let valorUF = Number(datosMonedas.uf.valor)
+                let total =  Number(inputMonedas) / Number(valorUF)
+                resultado.innerHTML = 'Tus $'+ inputMonedas+ ' pesos equivalen a: $'+total.toFixed(2).replace(".", ",") + ' ' +  datosMonedas.uf.nombre + ' (Valor actual: $' + valorUF +')'
+            } else if (seleccionado == 'dolar' && inputMonedas != ''){
+                let valorDolar = Number(datosMonedas.dolar.valor)
+                let total = Number(inputMonedas) / Number(valorDolar)
+                resultado.innerHTML = 'Tus $'+ inputMonedas+ ' pesos equivalen a: $'+total.toFixed(2).replace(".", ",") + ' ' +  datosMonedas.dolar.nombre + ' (Valor actual: $' + valorDolar +')'
+            } else if (seleccionado == 'utm' && inputMonedas != ''){
+                let valorUTM = Number(datosMonedas.utm.valor)
+                let total = Number(inputMonedas) /  Number(valorUTM)
+                resultado.innerHTML = 'Tus $'+ inputMonedas+ ' pesos equivalen a: $'+total.toFixed(2).replace(".", ",") + ' ' +  datosMonedas.utm.nombre + ' (Valor actual: $' + valorUTM +')'
+            }else if (seleccionado == 'euro' && inputMonedas != ''){
+                let valorEuro = Number(datosMonedas.euro.valor)
+                let total = Number(inputMonedas) / Number(valorEuro)
+                resultado.innerHTML = 'Tus $'+ inputMonedas+ ' pesos equivalen a: $'+total.toFixed(2).replace(".", ",") + ' ' +  datosMonedas.euro.nombre + ' (Valor actual: $' + valorEuro +')'
             } else {
-                alert('Debe ingresar un valor numérico para calcular')
+            alert('Debe ingresar un valor numérico para calcular')
+            resultado.innerHTML = ''
+        }
+    })
+    inputMonedas.value = ''
 
-            }
-        })
-        inputMonedas.value = ''
+            
+        //     let tipoMoneda = parseInt(selectMonedas.value)
+        //     console.log(tipoMoneda)
+        //     console.log(inputMonedas)
+        //     if (inputMonedas != '') {
+        //         convertido =   inputMonedas / tipoMoneda
+        //         resultado.innerHTML = convertido.toFixed(2) 
+        //     } else {
+        //         alert('Debe ingresar un valor numérico para calcular')
+
+        //     }
+        // })
+        // inputMonedas.value = ''
+
+        // let btnConvertir = document.querySelector('#conversor')
+        // btnConvertir.addEventListener('click', function () {
+        //     let resultado = document.querySelector('#resultado')
+        //     let inputMonedas = document.querySelector('#inputMonedas').value
+        
+
+            
+        //     let tipoMoneda = parseInt(selectMonedas.value)
+        //     console.log(tipoMoneda)
+        //     console.log(inputMonedas)
+        //     if (inputMonedas != '') {
+        //         convertido =   inputMonedas / tipoMoneda
+        //         resultado.innerHTML = convertido.toFixed(2) 
+        //     } else {
+        //         alert('Debe ingresar un valor numérico para calcular')
+
+        //     }
+        // })
+        // inputMonedas.value = ''
 
 
     } catch (e) {
@@ -42,66 +92,22 @@ getMonedas();
 
 //Cargando gráfico con los elementos del arreglo
 
-// async function getMonedasParaGrafico() {
-
-//     const endPoint = 'https://mindicador.cl/api';
-//     const monedasGrafico = await fetch(endPoint);
-//     const datosMonedasGrafico = await monedasGrafico.json();
-
-
-//     function crearGraficoMonedas(monedasG) {
-
-//         // Creamos las variables necesarias para el objeto de configuración
-//         const tipoDeGrafica = "line";
-//         const nombresDeLasMonedas = monedasG.map((monedaG) => monedaG.nombre);
-//         const titulo = "Monedas";
-//         const colorDeLinea = "green";
-//         const valores = monedasG.map((monedaG) => {
-//             const valor = monedaG.valor.replace(",", ".");
-//             return Number(valor);
-//         });
-
-
-//         const config = {
-//             type: tipoDeGrafica,
-//             data: {
-//                 labels: nombresDeLasMonedas,
-//                 datasets: [{
-//                     label: titulo,
-//                     backgroundColor: colorDeLinea,
-//                     data: valores
-//                 }]
-//             }
-//         };
-//         return config;
-//     }
-// }
-
-
-// async function renderGrafica() {
-//     const monedasG = await getMonedasParaGrafico();
-//     const config = crearGraficoMonedas(monedasG);
-//     const chartDOM = document.querySelector('#graficoMonedas')
-//     new Chart(chartDOM, config)
-// }
-// renderGrafica();
-
 //de la guía
 // async function getMonedas() {
-//     const endpoint = "https://api.gael.cloud/general/public/monedas";
-//     const res = await fetch(endpoint);
-//     const monedas = await res.json();
-//     return monedas;
+//     const endPoint = "https://mindicador.cl/api";
+//     const resultado = await fetch(endPoint);
+//     const monedas2 = await resultado.json();
+//     return monedas2;
 //     }  
 
-// function prepararConfiguracionParaLaGrafica(monedas) {
+// function prepararConfiguracionParaLaGrafica(monedas2) {
 //     // Creamos las variables necesarias para el objeto de configuración
 //     const tipoDeGrafica = "line";
-//     const nombresDeLasMonedas = monedas.map((moneda) => moneda.Codigo);
+//     const nombresDeLasMonedas = monedas2.map((moneda) => moneda.codigo);
 //     const titulo = "Monedas";
 //     const colorDeLinea = "red";
-//     const valores = monedas.map((moneda) => {
-//     const valor = moneda.Valor.replace(",", ".");
+//     const valores = monedas2.map((moneda) => {
+//     const valor = moneda.valor.replace(",", ".");
 //     return Number(valor);
 //     });
 
@@ -129,3 +135,56 @@ getMonedas();
     //     new Chart(chartDOM, config);
     //     } r
     //     enderGrafica();
+
+    // async function getAndCreateDataToChart() {
+    //     const endPoint = "https://mindicador.cl/api";
+    //     const resultado = await fetch(endPoint);
+    //     // const sismos = await resultado.json();
+    //     const monedasG = await resultado.json();
+    
+    
+    //     const labels = monedasG.map((monedaG => {
+    //         return monedaG.codigo;
+    //     });
+
+    //     const data = monedasG.map((sismo) => {
+    //         const magnitud = sismo.Magnitud.split(" ")[0];
+    //         return Number(magnitud);
+    //     });
+    //     const datasets = [
+    //         {
+    //             label: "Sismo",
+    //             borderColor: "rgb(255, 99, 132)",
+    //             data
+    //         }
+    //     ];
+    //     return { labels, datasets };
+    // }
+    // async function renderGrafica() {
+    //     const data = await getAndCreateDataToChart();
+    //     const config = {
+    //     type: "line",
+    //     data
+    //     };
+    //     const myChart = document.getElementById("myChart");
+    //     myChart.style.backgroundColor = "white";
+    //     new Chart(myChart, config);
+    //     } 
+    //     renderGrafica();
+
+    //de Alfonso
+    // function getChart(){  
+        // chart = new Chart(ctx, { 
+        //     type: 'line', 
+        //     data: { datasets:[{ 
+        //         label: cod.charAt(0).toUpperCase() + cod.slice(1), 
+        //         data: serie, borderColor: '#0d6efd', 
+        //         backgroundColor: '#0d6efd', }] }, 
+        //         options: { scales: { x: { 
+        //             ticks: { callback: function(v, i, ticks) { 
+        //                 let date = new Date(serie[i].fecha); 
+        //                 return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`; 
+        //             } } } }, 
+        //             parsing: { 
+        //                 xAxisKey: 'fecha', 
+        //                 yAxisKey: 'valor' } } });}
