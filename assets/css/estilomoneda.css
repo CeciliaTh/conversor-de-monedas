@@ -40,4 +40,5 @@ background-image: url("../img/fondo3-monedasJPG.jpg");
 #grafico{
     border-radius: 10px;
     border: 2px solid blueviolet;
+    /* width:100%; */
 }

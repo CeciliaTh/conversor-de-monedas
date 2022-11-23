@@ -1,4 +1,3 @@
-
 async function getMonedas() {
     try {
         const monedas = await fetch("https://mindicador.cl/api");
@@ -25,18 +24,22 @@ async function getMonedas() {
                 let valorUF = Number(datosMonedas.uf.valor)
                 let total =  Number(inputMonedas) / Number(valorUF)
                 resultado.innerHTML = 'Tus $'+ inputMonedas+ ' pesos equivalen a: $'+total.toFixed(2).replace(".", ",") + ' ' +  datosMonedas.uf.nombre + ' (Valor actual: $' + valorUF +')'
+                graficoMonedas(seleccionado)
             } else if (seleccionado == 'dolar' && inputMonedas != ''){
                 let valorDolar = Number(datosMonedas.dolar.valor)
                 let total = Number(inputMonedas) / Number(valorDolar)
                 resultado.innerHTML = 'Tus $'+ inputMonedas+ ' pesos equivalen a: $'+total.toFixed(2).replace(".", ",") + ' ' +  datosMonedas.dolar.nombre + ' (Valor actual: $' + valorDolar +')'
+                graficoMonedas(seleccionado)
             } else if (seleccionado == 'utm' && inputMonedas != ''){
                 let valorUTM = Number(datosMonedas.utm.valor)
                 let total = Number(inputMonedas) /  Number(valorUTM)
                 resultado.innerHTML = 'Tus $'+ inputMonedas+ ' pesos equivalen a: $'+total.toFixed(2).replace(".", ",") + ' ' +  datosMonedas.utm.nombre + ' (Valor actual: $' + valorUTM +')'
+                graficoMonedas(seleccionado)
             }else if (seleccionado == 'euro' && inputMonedas != ''){
                 let valorEuro = Number(datosMonedas.euro.valor)
                 let total = Number(inputMonedas) / Number(valorEuro)
                 resultado.innerHTML = 'Tus $'+ inputMonedas+ ' pesos equivalen a: $'+total.toFixed(2).replace(".", ",") + ' ' +  datosMonedas.euro.nombre + ' (Valor actual: $' + valorEuro +')'
+                graficoMonedas(seleccionado)
             } else {
             alert('Debe ingresar un valor numérico para calcular')
             resultado.innerHTML = ''
@@ -46,10 +49,48 @@ async function getMonedas() {
 
     } catch (e) {
         alert(e.message);
-    }
-}
-
+    }}
 getMonedas();
+
+
+let grafico = ''
+async function graficoMonedas (tipoMoneda) {
+    try {
+        const monedasGrafico = await fetch(`https://mindicador.cl/api/${tipoMoneda}`);
+        const arregloMonedas = await monedasGrafico.json();
+        console.log(arregloMonedas)
+
+        let fechasMonedas = arregloMonedas.serie.map((moneda) => moneda.fecha.slice(8, 10));
+        console.log(fechasMonedas) //Con esto solo me traje los números de la fecha
+        let valoresMonedas = arregloMonedas.serie.map((moneda2) => moneda2.valor)
+        console.log(valoresMonedas)
+                 
+       let configGrafico = {
+            type: "line",
+            data: {
+                labels: fechasMonedas.slice(0, 10).reverse(),
+                datasets: [{
+                    data: valoresMonedas.slice(0, 10).reverse(),
+                    label: "Noviembre",
+                    pointBackgroundColor: "rgb(75, 192, 192)",
+                    fill: "rgb(75, 192, 192)",
+                    borderColor: "rgb(75, 192, 192)"
+                  }],
+                }
+              }
+       let graficoMonedas = document.querySelector("#graficoMonedas");
+       if (grafico != ''){
+        grafico.destroy();
+       }
+       
+  grafico = new Chart(graficoMonedas, configGrafico);
+    } //fin try
+
+    catch (e) {
+    alert(e.message);
+} //fin catch
+} //fin funcion
+
 
 //Cargando gráfico con los elementos del arreglo
 
@@ -139,7 +180,8 @@ getMonedas();
         //     type: 'line', 
         //     data: { datasets:[{ 
         //         label: cod.charAt(0).toUpperCase() + cod.slice(1), 
-        //         data: serie, borderColor: '#0d6efd', 
+        //         data: serie, 
+        //         borderColor: '#0d6efd', 
         //         backgroundColor: '#0d6efd', }] }, 
         //         options: { scales: { x: { 
         //             ticks: { callback: function(v, i, ticks) { 
